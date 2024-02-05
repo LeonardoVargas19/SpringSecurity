@@ -1,6 +1,8 @@
 package com.cursosapi.springsecurity.services;
 
+import com.cursosapi.springsecurity.dto.SaveCategory;
 import com.cursosapi.springsecurity.persistence.entity.Category;
+import com.cursosapi.springsecurity.persistence.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,4 +12,8 @@ public interface CategoriService {
      Page<Category> findAll(Pageable pageable);
 
      Optional<Category> findOneId(Long categoryId);
+
+     Category createOne(SaveCategory saveCategory);
+
+     Product disableOneById(Long productId);
 }

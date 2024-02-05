@@ -1,15 +1,16 @@
 package com.cursosapi.springsecurity.contoller;
 
+import com.cursosapi.springsecurity.dto.SaveCategory;
 import com.cursosapi.springsecurity.persistence.entity.Category;
+import com.cursosapi.springsecurity.persistence.entity.Product;
 import com.cursosapi.springsecurity.services.CategoriService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -32,6 +33,25 @@ public class CategoriController {
     public ResponseEntity<Category> findOne(@PathVariable Long categoryId) {
         Optional<Category> category = categoriService.findOneId(categoryId);
         return category.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @PostMapping
+    public ResponseEntity<Category> createOne(@RequestBody @Valid SaveCategory saveCategory) {
+        Category category = categoriService.createOne(saveCategory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(category);
+    }
+
+    @PostMapping
+    public ResponseEntity<Category> updateOneById(@RequestBody @Valid SaveCategory saveCategory) {
+        Category category = categoriService.createOne(saveCategory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(category);
+    }
+
+    @PutMapping("/{product}/disabled")
+    public ResponseEntity<Product> disableOneById(@PathVariable Long productId) {
+        Product product = categoriService.disableOneById(productId);
+        return ResponseEntity.ok(product);
+
+
     }
 
 
