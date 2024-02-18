@@ -24,7 +24,10 @@ public class ProductServiImpl implements ProductService {
 
     @Override
     public Optional<Product> findOneId(Long productId) {
-        return productRepository.findById(productId);
+        Product productoFromBD = productRepository.findById(productId).orElseThrow(()->new ObjectNorFoundExeption("Product not found with id"+ productId));
+        productoFromBD.setStatus(Product.ProductStatus.DISABLED);
+
+        return Optional.of(productRepository.save(productoFromBD));
     }
 
     @Override
@@ -35,8 +38,6 @@ public class ProductServiImpl implements ProductService {
         product.setStatus(Product.ProductStatus.ENABLED);
         Category category = new Category();
         category.setId(saveProduct.getCategoryId());
-
-
         return productRepository.save(product);
     }
 
