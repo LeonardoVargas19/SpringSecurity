@@ -15,5 +15,9 @@ public interface CategoriService {
 
      Category createOne(SaveCategory saveCategory);
 
-     Product disableOneById(Long productId);
+
+
+     Category updateOneById(Long categoryId, SaveCategory saveCategory);
+
+     Category disableOneById(Long categoryId);
 }

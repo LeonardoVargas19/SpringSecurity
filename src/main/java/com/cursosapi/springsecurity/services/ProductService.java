@@ -14,4 +14,6 @@ public interface ProductService {
     Optional<Product> findOneId(Long productId);
 
     Product createOne(SaveProduct saveProduct);
+
+    Product updateOneById(Long productId, SaveProduct saveProduct);
 }

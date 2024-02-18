@@ -40,18 +40,16 @@ public class CategoriController {
         return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
 
-    @PostMapping
-    public ResponseEntity<Category> updateOneById(@RequestBody @Valid SaveCategory saveCategory) {
-        Category category = categoriService.createOne(saveCategory);
-        return ResponseEntity.status(HttpStatus.CREATED).body(category);
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Category> updateOneById(@PathVariable Long categoryId,  @RequestBody @Valid SaveCategory saveCategory) {
+        Category category = categoriService.updateOneById(categoryId,saveCategory);
+        return ResponseEntity.ok(category);
     }
 
-    @PutMapping("/{product}/disabled")
-    public ResponseEntity<Product> disableOneById(@PathVariable Long productId) {
-        Product product = categoriService.disableOneById(productId);
-        return ResponseEntity.ok(product);
-
-
+    @PutMapping("/{categoryId}/disabled")
+    public ResponseEntity<Category> disableOneById(@PathVariable Long categoryId) {
+        Category category = categoriService.disableOneById(categoryId);
+        return ResponseEntity.ok(category);
     }
 
 

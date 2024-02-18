@@ -5,11 +5,9 @@ import com.cursosapi.springsecurity.persistence.entity.Product;
 import com.cursosapi.springsecurity.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
-public class Productos {
+public class ProductController {
     @Autowired
     private ProductService productService;
 
@@ -33,10 +31,19 @@ public class Productos {
     @GetMapping("/{product}")
     public ResponseEntity<Product> findOne (@PathVariable Long productId) {
         Optional<Product> product = productService.findOneId(productId);
+
         if (product.isPresent()) {
             return ResponseEntity.ok(product.get());
+
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<Product> updateOneById(@PathVariable Long productId ,
+                                                 @RequestBody @Valid SaveProduct saveProduct){
+        Product product = productService.updateOneById(productId, saveProduct);
+        return ResponseEntity.ok(product);
     }
 
     @PostMapping

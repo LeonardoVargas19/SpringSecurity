@@ -1,14 +1,22 @@
 package com.cursosapi.springsecurity.persistence.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Category {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
-    private CategoryStatus categoryStatus;
+
+    @Enumerated(EnumType.STRING)
+    private CategoryStatus status;
+
+    public static enum CategoryStatus{
+        ENABLED, DISABLED;
+    }
 
     public Long getId() {
         return id;
@@ -26,15 +34,12 @@ public class Category {
         this.name = name;
     }
 
-    public CategoryStatus getCategoryStatus() {
-        return categoryStatus;
+    public CategoryStatus getStatus() {
+        return status;
     }
 
-    public void setCategoryStatus(CategoryStatus categoryStatus) {
-        this.categoryStatus = categoryStatus;
-    }
-
-    public static enum CategoryStatus{
-        ENABLE,DIABLED;
+    public void setStatus(CategoryStatus status) {
+        this.status = status;
     }
 }
+
