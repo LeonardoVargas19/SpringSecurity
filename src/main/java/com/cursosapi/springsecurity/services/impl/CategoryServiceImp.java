@@ -52,4 +52,10 @@ public class CategoryServiceImp implements CategoriService {
         categoryFromDb.setStatus(Category.CategoryStatus.DISABLED);
         return categoryRepository.save(categoryFromDb);
     }
+
+    @Override
+    public Optional<Category> findOneById(Long categoryId) {
+        return categoryRepository.findById(categoryId);
+    }
+
 }

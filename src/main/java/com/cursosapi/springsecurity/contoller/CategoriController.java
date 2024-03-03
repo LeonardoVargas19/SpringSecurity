@@ -17,7 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/categories")
 public class CategoriController {
-
+    @Autowired
     private CategoriService categoriService;
 
     @GetMapping
@@ -30,9 +30,15 @@ public class CategoriController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<Category> findOne(@PathVariable Long categoryId) {
-        Optional<Category> category = categoriService.findOneId(categoryId);
-        return category.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Category> findOneById(@PathVariable Long categoryId){
+
+        Optional<Category> category = categoriService.findOneById(categoryId);
+
+        if(category.isPresent()){
+            return ResponseEntity.ok(category.get());
+        }
+
+        return ResponseEntity.notFound().build();
     }
     @PostMapping
     public ResponseEntity<Category> createOne(@RequestBody @Valid SaveCategory saveCategory) {

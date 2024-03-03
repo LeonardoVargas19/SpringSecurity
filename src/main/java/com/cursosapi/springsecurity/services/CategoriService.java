@@ -20,4 +20,6 @@ public interface CategoriService {
      Category updateOneById(Long categoryId, SaveCategory saveCategory);
 
      Category disableOneById(Long categoryId);
+
+    Optional<Category> findOneById(Long categoryId);
 }
