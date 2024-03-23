@@ -26,7 +26,7 @@ public enum Role {
             RolePermssion.UPDATE_ONE_CATEGORY,
             RolePermssion.READ_MY_PROFILE
     )),
-    ROLE_CUSTOMER(Arrays.asList(
+    ROLE_CUSTOMER(List.of(
             RolePermssion.READ_MY_PROFILE
     ));
 

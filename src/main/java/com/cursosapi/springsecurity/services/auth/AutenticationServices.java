@@ -64,4 +64,14 @@ public class AutenticationServices {
         authResp.setJwt(jwt);
         return authResp;
     }
+
+    public boolean validateToken(String jwt) {
+        try{
+            jwtService.extractUsername(jwt);
+            return true;
+        }catch (Exception e ){
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
 }
