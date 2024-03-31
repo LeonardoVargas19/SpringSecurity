@@ -4,12 +4,14 @@ import com.cursosapi.springsecurity.dto.RegisteredUser;
 import com.cursosapi.springsecurity.dto.SaveUser;
 import com.cursosapi.springsecurity.dto.auth.AuthenticationResponse;
 import com.cursosapi.springsecurity.dto.auth.AuthenticationResquest;
+import com.cursosapi.springsecurity.exception.ObjectNorFoundExeption;
 import com.cursosapi.springsecurity.persistence.entity.User;
 import com.cursosapi.springsecurity.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -73,5 +75,15 @@ public class AutenticationServices {
             System.err.println(e.getMessage());
             return false;
         }
+    }
+
+    public User findLoggedInUser() {
+
+        Authentication authentication = (UsernamePasswordAuthenticationToken ) SecurityContextHolder.getContext().getAuthentication();
+
+            String username = (String) authentication.getPrincipal();
+            return userServices.findOneByUsername(username)
+                    .orElseThrow(()-> new ObjectNorFoundExeption("User not Found Username :"+username));
+
     }
 }

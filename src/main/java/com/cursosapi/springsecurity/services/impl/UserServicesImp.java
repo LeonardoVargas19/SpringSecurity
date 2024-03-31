@@ -27,7 +27,7 @@ public class UserServicesImp implements UserServices {
         user.setUsername(newUser.getUsername());
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
         user.setName(newUser.getUsername());
-        user.setRole(Role.ROLE_CUSTOMER);
+        user.setRole(Role.CUSTOMER);
         return userRepository.save(user);
     }
 
