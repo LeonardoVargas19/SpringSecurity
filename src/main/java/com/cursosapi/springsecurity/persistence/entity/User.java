@@ -45,7 +45,7 @@ public class User implements UserDetails  {
 //                    String permission = each.name();
 //                    return  new SimpleGrantedAuthority(permission);
 //                })
-        authorities.add(new SimpleGrantedAuthority(this.role.name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+ this.role.name()));
         return authorities;
     }
 

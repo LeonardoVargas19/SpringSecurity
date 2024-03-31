@@ -1,31 +1,41 @@
 package com.cursosapi.springsecurity.config.security;
 
 import com.cursosapi.springsecurity.config.security.filter.JwtAuthenticationFilter;
-import com.cursosapi.springsecurity.persistence.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+public class HttpSecurityConfig {
 
-public class HTTPSECURITYCONFIG {
+
 
     @Autowired
     private AuthenticationProvider daoAuthProvider;
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    private static void buildRequestMatchers2(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authReqConfig) {
+
+        authReqConfig.requestMatchers(HttpMethod.POST, "/customers").permitAll();
+        authReqConfig.requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll();
+        authReqConfig.requestMatchers(HttpMethod.GET, "/auth/validate-token").permitAll();
+
+        authReqConfig.anyRequest().authenticated();
+
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +46,7 @@ public class HTTPSECURITYCONFIG {
                 .authenticationProvider(daoAuthProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests( authReqConfig -> {
-                    buildRequestMatchers(authReqConfig);
+                    buildRequestMatchers2(authReqConfig);
                 } )
                 .build();
 
@@ -46,7 +56,7 @@ public class HTTPSECURITYCONFIG {
     private static void buildRequestMatchers(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authReqConfig) {
     /*
     Autorización de endpoints de products
-     */
+     *products/
         authReqConfig.requestMatchers(HttpMethod.GET, "/products")
                 .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
 
@@ -67,24 +77,24 @@ public class HTTPSECURITYCONFIG {
                     Autorización de endpoints de categories
                      */
 
-        authReqConfig.requestMatchers(HttpMethod.GET, "/categories")
-                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
-
-        authReqConfig.requestMatchers(HttpMethod.GET, "/categories/{categoryId}")
-                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
-
-        authReqConfig.requestMatchers(HttpMethod.POST, "/categories")
-                .hasRole(Role.ADMINISTRATOR.name());
-
-        authReqConfig.requestMatchers(HttpMethod.PUT, "/categories/{categoryId}")
-                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
-
-        authReqConfig.requestMatchers(HttpMethod.PUT, "/categories/{categoryId}/disabled")
-                .hasRole(Role.ADMINISTRATOR.name());
-
-        authReqConfig.requestMatchers(HttpMethod.GET, "/auth/profile")
-                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name(),
-                        Role.CUSTOMER.name());
+//        authReqConfig.requestMatchers(HttpMethod.GET, "/categories")
+//                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
+//
+//        authReqConfig.requestMatchers(HttpMethod.GET, "/categories/{categoryId}")
+//                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
+//
+//        authReqConfig.requestMatchers(HttpMethod.POST, "/categories")
+//                .hasRole(Role.ADMINISTRATOR.name());
+//
+//        authReqConfig.requestMatchers(HttpMethod.PUT, "/categories/{categoryId}")
+//                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
+//
+//        authReqConfig.requestMatchers(HttpMethod.PUT, "/categories/{categoryId}/disabled")
+//                .hasRole(Role.ADMINISTRATOR.name());
+//
+//        authReqConfig.requestMatchers(HttpMethod.GET, "/auth/profile")
+//                .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name(),
+//                        Role.CUSTOMER.name());
 
                     /*
                     Autorización de endpoints públicos
@@ -95,4 +105,11 @@ public class HTTPSECURITYCONFIG {
 
         authReqConfig.anyRequest().authenticated();
     }
+
 }
+
+
+
+
+
+

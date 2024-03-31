@@ -9,6 +9,7 @@ import com.cursosapi.springsecurity.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class ProductServiImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @PreAuthorize("hasAuthority('READ_ALL_PRODUCTS')")
     @Override
     public Page<Product> findAll(Pageable pageable) {
         return productRepository.findAll(pageable);
