@@ -2,7 +2,7 @@ package com.cursosapi.springsecurity.contoller;
 
 import com.cursosapi.springsecurity.dto.auth.AuthenticationResponse;
 import com.cursosapi.springsecurity.dto.auth.AuthenticationResquest;
-import com.cursosapi.springsecurity.persistence.entity.User;
+import com.cursosapi.springsecurity.persistence.entity.security.User;
 import com.cursosapi.springsecurity.services.auth.AutenticationServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

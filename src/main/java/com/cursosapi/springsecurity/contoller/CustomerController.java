@@ -2,7 +2,7 @@ package com.cursosapi.springsecurity.contoller;
 
 import com.cursosapi.springsecurity.dto.RegisteredUser;
 import com.cursosapi.springsecurity.dto.SaveUser;
-import com.cursosapi.springsecurity.persistence.entity.User;
+import com.cursosapi.springsecurity.persistence.entity.security.User;
 import com.cursosapi.springsecurity.services.auth.AutenticationServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController

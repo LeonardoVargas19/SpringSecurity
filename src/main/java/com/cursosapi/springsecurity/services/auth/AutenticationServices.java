@@ -5,7 +5,7 @@ import com.cursosapi.springsecurity.dto.SaveUser;
 import com.cursosapi.springsecurity.dto.auth.AuthenticationResponse;
 import com.cursosapi.springsecurity.dto.auth.AuthenticationResquest;
 import com.cursosapi.springsecurity.exception.ObjectNorFoundExeption;
-import com.cursosapi.springsecurity.persistence.entity.User;
+import com.cursosapi.springsecurity.persistence.entity.security.User;
 import com.cursosapi.springsecurity.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class AutenticationServices {
@@ -40,7 +39,7 @@ public class AutenticationServices {
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
         userDTO.setUsername(user.getUsername());
-        userDTO.setRole(user.getRole().name());
+        userDTO.setRole(user.getRole().getName());
 
         String jwt = jwtService.generarToken(user, generateExtraClaims(user));
         userDTO.setJwt(jwt);
@@ -50,7 +49,7 @@ public class AutenticationServices {
     private Map<String, Object> generateExtraClaims(User user) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("name", user.getName());
-        extraClaims.put("role", user.getRole().name());
+        extraClaims.put("role", user.getRole().getName());
         extraClaims.put("authorities", user.getAuthorities());
         return extraClaims;
     }

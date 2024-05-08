@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "security.default.role",
+      "type": "java.lang.String",
+      "description": "Description for security.default.role."
+  }
+] }

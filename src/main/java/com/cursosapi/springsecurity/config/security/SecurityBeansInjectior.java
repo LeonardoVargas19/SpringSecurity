@@ -1,7 +1,7 @@
 package com.cursosapi.springsecurity.config.security;
 
 import com.cursosapi.springsecurity.exception.ObjectNorFoundExeption;
-import com.cursosapi.springsecurity.persistence.repository.UserRepository;
+import com.cursosapi.springsecurity.persistence.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +38,7 @@ public class SecurityBeansInjectior {
         return (username) -> {
             return userRepository.findByUsername(username).
                     orElseThrow(() -> new ObjectNorFoundExeption("User not Found whith username"+username));
+
         } ;
     }
 }

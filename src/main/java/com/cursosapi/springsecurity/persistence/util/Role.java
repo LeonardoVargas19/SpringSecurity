@@ -5,41 +5,38 @@ import java.util.List;
 
 public enum Role {
     ADMINISTRATOR(Arrays.asList(
-            RolePermssion.READ_ALL_PRODUCTS,
-            RolePermssion.CREATE_ONE_PRODUCTS,
-            RolePermssion.UPDATE_ONE_CATEGORY,
-            RolePermssion.DISABLE_ONE_PRODUCTS,
-            RolePermssion.READ_ONE_CATEGORY,
-            RolePermssion.CREATE_ONE_CATEGORY,
-            RolePermssion.UPDATE_ONE_CATEGORY,
-            RolePermssion.DISABLE_ONE_CATEGORY,
-            RolePermssion.READ_MY_PROFILE
+            RolePermissionEnum.READ_ALL_PRODUCTS,
+            RolePermissionEnum.UPDATE_ONE_CATEGORY,
+            RolePermissionEnum.READ_ONE_CATEGORY,
+            RolePermissionEnum.CREATE_ONE_CATEGORY,
+            RolePermissionEnum.UPDATE_ONE_CATEGORY,
+            RolePermissionEnum.DISABLE_ONE_CATEGORY,
+            RolePermissionEnum.READ_MY_PROFILE
 
 
     )),
     ASSISTANT_ADMINISTRATOR(Arrays.asList(
-            RolePermssion.READ_ALL_PRODUCTS,
-            RolePermssion.CREATE_ONE_PRODUCTS,
-            RolePermssion.UPDATE_ONE_CATEGORY,
-            RolePermssion.READ_ONE_CATEGORY,
-            RolePermssion.CREATE_ONE_CATEGORY,
-            RolePermssion.UPDATE_ONE_CATEGORY,
-            RolePermssion.READ_MY_PROFILE
+            RolePermissionEnum.READ_ALL_PRODUCTS,
+            RolePermissionEnum.UPDATE_ONE_CATEGORY,
+            RolePermissionEnum.READ_ONE_CATEGORY,
+            RolePermissionEnum.CREATE_ONE_CATEGORY,
+            RolePermissionEnum.UPDATE_ONE_CATEGORY,
+            RolePermissionEnum.READ_MY_PROFILE
     )),
     CUSTOMER(List.of(
-            RolePermssion.READ_MY_PROFILE
+            RolePermissionEnum.READ_MY_PROFILE
     ));
 
-    private List<RolePermssion> permission;
-    Role(List<RolePermssion> permission){
+    private List<RolePermissionEnum> permission;
+    Role(List<RolePermissionEnum> permission){
         this.permission = permission;
     }
 
-    public List<RolePermssion> getPermission() {
+    public List<RolePermissionEnum> getPermission() {
         return permission;
     }
 
-    public void setPermission(List<RolePermssion> permission) {
+    public void setPermission(List<RolePermissionEnum> permission) {
         this.permission = permission;
     }
 }
