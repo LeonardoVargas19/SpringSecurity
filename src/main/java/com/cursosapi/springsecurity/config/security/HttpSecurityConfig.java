@@ -11,22 +11,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-//@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
 public class HttpSecurityConfig {
 
 
 
     @Autowired
     private AuthenticationProvider daoAuthProvider;
-    @Autowired
-    private AuthenticationEntryPoint authenticationEntryPoint;
-
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -50,11 +46,8 @@ public class HttpSecurityConfig {
                 .authenticationProvider(daoAuthProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests( authReqConfig -> {
-                    buildRequestMatchers(authReqConfig);
+                    buildRequestMatchers2(authReqConfig);
                 } )
-                .exceptionHandling( exceptionConfig -> {
-                    exceptionConfig.authenticationEntryPoint(authenticationEntryPoint);
-                })
                 .build();
 
         return filterChain;

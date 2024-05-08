@@ -38,6 +38,7 @@ public class SecurityBeansInjectior {
         return (username) -> {
             return userRepository.findByUsername(username).
                     orElseThrow(() -> new ObjectNorFoundExeption("User not Found whith username"+username));
+
         } ;
     }
 }
